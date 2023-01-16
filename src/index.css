@@ -1,0 +1,40 @@
+*{
+  margin: 0;
+  padding:0;
+  box-sizing: border-box;
+}
+body{
+  font-family: 'Nunito Sans', sans-serif;
+font-family: 'Roboto', sans-serif
+}
+.table {
+  width: 80%;
+  border-collapse: collapse;
+  margin:  16px auto;
+  border-radius: 10px;
+  
+}
+
+.header {
+  text-align: left;
+  margin-bottom: 8px;
+  font-size: 16px;
+  background-color: #000080;
+  color: #fff;
+}
+
+td{
+  width: 25%;
+}
+td,
+th {
+  border: 1px solid #e3e3e3;
+  padding: 8px;
+}
+
+.tableData {
+  text-align: center;
+}
+.App{
+  padding:'0 64px'
+}
