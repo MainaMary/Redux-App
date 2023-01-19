@@ -6,7 +6,7 @@ export const fetchUsers = () => {
        
         try {
             dispatch(fetchUsersBegin())
-            const response = await axios("https://reactjs-test.prestoapi.com/api/users")
+            const response = await axios("https://us-central1-ti-reactjs-test.cloudfunctions.net/app/api/users")
             const users = response.data
             console.log(response)
 
