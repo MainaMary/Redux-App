@@ -1,57 +1,75 @@
-import React,{useEffect} from 'react'
+import React,{useEffect, useState} from 'react'
 import { fetchUsers } from '../store/users/thunks'
-import {connect} from "react-redux"
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-const UsersList = ({userData, fetchUsers}:any) => {
+import { AppDispatch } from '../store'
+import CustomLoader from '../components/CustomLoader'
+import Modal from '../components/Modal'
+import { UserProps } from '../interfaces'
+const UsersList = () => {
+  const [openModal, setOpenModal] = useState(false)
+  const [userDetails, setUserDetails]= useState({})
+  const dispatch = useDispatch<AppDispatch>()
+  const users = useSelector((state:any) => {
+    return state.users
+})
   useEffect(()=>{
-    fetchUsers()
+   dispatch(fetchUsers())
   },[])
-  console.log(userData,'users')
+  console.log(users.users, 'state')
+  const handleModal =() =>{
+    setOpenModal((prev) => !prev)
+  }
+  const handleEdit = (details:UserProps) =>{
+
+    handleModal()
+    console.log('Modal open')
+  }
+  const handleDelete = (userId:string) =>{
+
+   
+  }
+   console.log(openModal)
   return (
     <Wrapper>
-      <Flex>
-        <h2>Welcome to the users profile!</h2>
-        <Button>
-          <Redirect to="/addUser">Add employee</Redirect>
-        </Button>
-      </Flex>
-      <table className="table">
-          <tr>
-            <th className="header">Name</th>
-            <th className="header">Email</th>
-            <th className="header">Occupation</th>
-            <th className="header">Actions</th>
-          </tr>
-          <tr>
-            <td>John Doe</td>
-            <td>50</td>
-            <td>Paid</td>
-            <td>
-              <Flex>
-                <Button>Edit</Button>
-                <Button>Delete</Button>
-              </Flex>
-            </td>
-          </tr>
-        </table>
-    </Wrapper>
+            <Flex>
+                <h2>Welcome to the users profile!</h2>
+                <Button>
+                    <Redirect to="/addUser">Add employee</Redirect>
+                </Button>
+            </Flex>
+            {users.loading ? <Loader><CustomLoader/></Loader> : users.error ? <p>Error</p> :
+            
+            <table className="table">
+                <tr>
+                    <th className="header">Name</th>
+                    <th className="header">Email</th>
+                    <th className="header">Occupation</th>
+                    <th className="header">Actions</th>
+                </tr>
+                {users.users.length && users.users.slice(15).map(user => <tr>
+                    <td>{user.name}</td>
+                    <td>{user.email}</td>
+                    <td>{user.occupation}</td>
+                    <td>
+                        <Flex>
+                            <Button onClick={() =>{handleEdit(user), setUserDetails(user)}}>Edit</Button>
+                            <Button onClick={()=>handleDelete(user.id)}>Delete</Button>
+                        </Flex>
+                    </td>
+                </tr>)}
+               
+            </table> 
+            
+            }
+            <>{openModal && <Modal openModal={openModal} handleModal={handleModal} userDetails={userDetails}/>}</>
+        </Wrapper>
   )
 }
-const mapStateToProps = (state: any) =>{
-  return {
-    userData: state.users
-  }
 
-}
-const mapDispatchToProps =(dispatch:any) =>{
-  return {
-    fetchUsers : () =>dispatch(fetchUsers())
-  }
 
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(UsersList)
+export default UsersList
 const Wrapper = styled.div`
 padding: 0px 64px;
 @media screen and (max-width: 768px) {
@@ -67,17 +85,20 @@ margin: 20px 0;
   text-align: center;
 }
 `
+const Loader = styled.div`
+text-align: center;
+`
 const Button = styled.div`
 text-transform: upper-case;
 font-size: 18px;
 text-align: center;
 padding: 12px 16px;
-
+color:#FFFF00;
 background-color:#000080;
 border-radius: 10px;
 `
 const Redirect = styled(Link)`
-color: #fff;
+color: #FFFF00;
 text-decoration: none;
 
 `

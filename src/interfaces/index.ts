@@ -8,6 +8,7 @@ export interface UserProps {
     email:string;
     occupation: string;
     bio: string
+    id?:string
 
 
 }
