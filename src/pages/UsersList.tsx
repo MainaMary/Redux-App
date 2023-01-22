@@ -7,6 +7,8 @@ import { AppDispatch } from '../store'
 import CustomLoader from '../components/CustomLoader'
 import Modal from '../components/Modal'
 import { UserProps } from '../interfaces'
+import { deleteUser } from '../store/users/thunks'
+
 const UsersList = () => {
   const [openModal, setOpenModal] = useState(false)
   const [userDetails, setUserDetails]= useState({})
@@ -17,19 +19,20 @@ const UsersList = () => {
   useEffect(()=>{
    dispatch(fetchUsers())
   },[])
-  console.log(users.users, 'state')
+ 
   const handleModal =() =>{
     setOpenModal((prev) => !prev)
   }
   const handleEdit = (details:UserProps) =>{
-
-    handleModal()
     console.log('Modal open')
   }
   const handleDelete = (userId:string) =>{
-
+    console.log(userId,'userId');
+    dispatch(deleteUser(userId))
+   
    
   }
+ 
    console.log(openModal)
   return (
     <Wrapper>

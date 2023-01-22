@@ -1,4 +1,4 @@
-import { FETCH_USERS_BEGIN, FETCH_USERS_FAILURE, FETCH_USERS_SUCCESS } from "./constants";
+import { FETCH_USERS_BEGIN, FETCH_USERS_FAILURE, FETCH_USERS_SUCCESS, DELETE_USER } from "./constants";
 import { InitialProps } from "../../interfaces";
 
 const initialState: InitialProps = {
@@ -26,6 +26,12 @@ const reducer = (state = initialState, action: any) => {
                 loading: false,
                 error: action.payload,
                 users: []
+            }
+        case DELETE_USER:
+            return {
+                ...state,
+                loading: false
+
             }
         default:
             return state

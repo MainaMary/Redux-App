@@ -1,4 +1,3 @@
-import "./App.css";
 import RoutesList from "./routes";
 import { ToastContainer } from "react-toastify";
 function App() {

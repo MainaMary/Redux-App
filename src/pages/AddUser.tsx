@@ -28,10 +28,8 @@ const AddUser = () => {
     console.log(bio,'formValues')
   const handleSubmit = (e: any) =>{
     e.preventDefault()
+     console.log(bio , name, email, occupation)
     
-    if(!bio || !name || !email || occupation){
-     return toast.warn("Please fill in all the details")
-    }
   }
   useEffect(()=>{
     setTimeout(()=>{
