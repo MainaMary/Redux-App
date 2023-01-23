@@ -2,11 +2,9 @@ import React ,{useState, useEffect} from 'react'
 import { toast } from 'react-toastify';
 import styled from 'styled-components'
 import { Button } from '../styled'
-interface SyntheticEvent<T> {
-   
-    currentTarget: EventTarget & T;
-   
-}
+import { postSingleUser } from '../store/users/thunks';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../store';
 const AddUser = () => {
     const [formValues, setFormValues] = useState({
         name: '',
@@ -14,6 +12,7 @@ const AddUser = () => {
         occupation: '',
 
     })
+    const dispatch = useDispatch<AppDispatch>()
     const [bio, setBio] = useState('')
     const [error, setError] = useState('')
     const {name, email, occupation} = formValues
@@ -29,6 +28,13 @@ const AddUser = () => {
   const handleSubmit = (e: any) =>{
     e.preventDefault()
      console.log(bio , name, email, occupation)
+     const payload = {
+      name:name,
+      email: email,
+      occupation: occupation,
+      bio: bio
+     }
+     dispatch(postSingleUser(payload))
     
   }
   useEffect(()=>{
@@ -40,10 +46,11 @@ const AddUser = () => {
   return (
     <>
        <Title>Add employee</Title>
-       <Title>{error}</Title>
+      
     <FormWrapper>
+    <Title>{error}</Title>
      
-        <Form>
+        <Form onSubmit={handleSubmit}>
             <div>
             <CustomLabel>Name</CustomLabel>
             <CustomInput  type="text" name="name" onChange={handleChange} value ={name}/>
@@ -60,7 +67,7 @@ const AddUser = () => {
             <CustomLabel>Bio</CustomLabel>
             <CustomTextBox  onChange={handleTextBox} value={bio} rows={5}/>
             </div>
-            <Button onSubmit={handleSubmit}>Submit</Button>
+            <Button >Submit</Button>
         </Form>
     </FormWrapper>
     </>

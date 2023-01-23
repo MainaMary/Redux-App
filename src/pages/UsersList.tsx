@@ -29,8 +29,6 @@ const UsersList = () => {
   const handleDelete = (userId:string) =>{
     console.log(userId,'userId');
     dispatch(deleteUser(userId))
-   
-   
   }
  
    console.log(openModal)

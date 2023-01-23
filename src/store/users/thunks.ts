@@ -1,5 +1,6 @@
 import axios from "axios";
-import { fetchUsersSuccess, fetchUsersFailure, fetchUsersBegin, deleteSingleUser } from "./actions";
+import { fetchUsersSuccess, fetchUsersFailure, fetchUsersBegin, deleteSingleUser, postUser } from "./actions";
+import {UserProps } from "../../interfaces/index"
 
 export const fetchUsers = () => {
     return async function (dispatch: any) {
@@ -23,7 +24,7 @@ export const fetchUsers = () => {
 export const deleteUser = (id:string) =>{
     return async function (dispatch:any){
         try{
-            const response = await axios.delete(`${import.meta.env.VITE_APP_API}/${id}`)
+            const response = await axios.delete(`https://us-central1-ti-reactjs-test.cloudfunctions.net/app/api/users/${id}`)
             dispatch(deleteSingleUser())
             dispatch(fetchUsersSuccess(response.data))
             return response.data
@@ -32,4 +33,18 @@ export const deleteUser = (id:string) =>{
             console.log(`Unable ${err.message}`)
         }
     }
+}
+export const postSingleUser = (payload:UserProps)=>{
+    return async function (dispatch:any){
+        console.log(payload,'payload')
+        try{
+            const res = await axios.post(`https://us-central1-ti-reactjs-test.cloudfunctions.net/app/api/user`,payload )
+            dispatch(postUser())
+            console.log(res.data)
+        }
+        catch(error:any){
+            console.log(error.message)
+        }
+    }
+
 }
