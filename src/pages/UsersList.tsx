@@ -2,14 +2,15 @@ import React,{useEffect, useState} from 'react'
 import { fetchUsers } from '../store/users/thunks'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { AppDispatch } from '../store'
 import CustomLoader from '../components/CustomLoader'
 import Modal from '../components/Modal'
 import { UserProps } from '../interfaces'
 import { deleteUser } from '../store/users/thunks'
 import FormModal from '../components/FormModal'
-import { useNavigate } from 'react-router-dom'
+
+import { Redirect } from '../styled'
 
 
 const UsersList = () => {
@@ -58,7 +59,7 @@ const UsersList = () => {
                     <th className="header">Occupation</th>
                     <th className="header">Actions</th>
                 </tr>
-                {users.users.length && users.users.slice(15).map(user => <tr>
+                {users.users.length && users.users.slice(0,15).map(user => <tr>
                     <td>{user.name}</td>
                     <td>{user.email}</td>
                     <td>{user.occupation}</td>
@@ -107,9 +108,4 @@ padding: 12px 16px;
 color:#FFFF00;
 background-color:#000080;
 border-radius: 10px;
-`
-const Redirect = styled(Link)`
-color: #FFFF00;
-text-decoration: none;
-
 `

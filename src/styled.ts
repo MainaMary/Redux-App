@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 export const Button = styled.button.attrs(
   (props: { primary: boolean }) => props
 )`
@@ -26,7 +27,7 @@ export const FormWrapper = styled.div`
 display: flex;
 margin-top:64px;
 justify-content: center;
-width: 45%;
+width: 40%;
 margin:auto;
 border-radius: 10px;
 @media screen and (max-width: 768px) {
@@ -56,4 +57,9 @@ width: 100%;
 export const ButtonWrap = styled.div`
 display:flex;
 justify-content:space-between;
+`
+export const Redirect = styled(Link)`
+color: #FFFF00;
+text-decoration: none;
+
 `
