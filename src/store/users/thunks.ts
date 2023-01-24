@@ -1,6 +1,7 @@
 import axios from "axios";
-import { fetchUsersSuccess, fetchUsersFailure, fetchUsersBegin, deleteSingleUser, postUser } from "./actions";
+import { fetchUsersSuccess, fetchUsersFailure, fetchUsersBegin, deleteSingleUser, postUser , getSingleUser} from "./actions";
 import {UserProps } from "../../interfaces/index"
+import { AnyAsyncThunk } from "@reduxjs/toolkit/dist/matchers";
 
 export const fetchUsers = () => {
     return async function (dispatch: any) {
@@ -41,10 +42,25 @@ export const postSingleUser = (payload:UserProps)=>{
             const res = await axios.post(`https://us-central1-ti-reactjs-test.cloudfunctions.net/app/api/user`,payload )
             dispatch(postUser())
             console.log(res.data)
+          
         }
         catch(error:any){
             console.log(error.message)
         }
     }
 
+}
+export const fetchSingleUser = (userId:string | undefined)=>{
+    return async function(dispatch:any){
+        try{
+            const response = await axios.get(`https://us-central1-ti-reactjs-test.cloudfunctions.net/app/api/user/${userId}`)
+            console.log(response.data)
+            dispatch(fetchUsersSuccess(response.data))
+        }
+        catch(error:any){
+            console.log(error.message);
+            
+        }
+
+    }
 }
