@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
-import { fetchSingleUser } from "../store/users/thunks";
+import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { AppDispatch } from "../store";
 import { FormWrapper, Redirect } from "../styled";
 import { Form } from "../styled";
@@ -13,10 +13,9 @@ import {
   ButtonWrap,
   Title,
 } from "../styled";
-import { InitialProps, UserProps } from "../interfaces";
+import { UserProps } from "../interfaces";
 import { editUser } from "../store/users/thunks";
 
-import { useSelector } from "react-redux";
 const EditForm = () => {
   const dispatch = useDispatch<AppDispatch>();
   const userDetails = useSelector((state: any) => state.users.users);
@@ -26,24 +25,24 @@ const EditForm = () => {
     bio: "",
     occupation: "",
   });
-  const { bio, email, name, occupation } = userDetails;
   const { id } = useParams();
+
   useEffect(() => {
-    console.log(id, "id");
-    dispatch(fetchSingleUser(id));
-  }, [id]);
-  useEffect(() => {
-    if (userDetails) {
-      setUser({ ...userDetails });
+    const currentUser = userDetails.find((label) => label.id === id);
+    if (currentUser) {
+      setUser(currentUser);
     }
-  }, [userDetails]);
+  }, []);
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
   };
-  const handleSubmit = () => {
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
     dispatch(editUser(id, user));
   };
+  console.log(user, "user");
+
   return (
     <>
       <Title>Edit user</Title>
@@ -55,7 +54,7 @@ const EditForm = () => {
               type="text"
               name="name"
               onChange={handleChange}
-              value={name || ""}
+              value={user.name || ""}
             />
           </div>
           <div>
@@ -64,7 +63,7 @@ const EditForm = () => {
               type="text"
               name="email"
               onChange={handleChange}
-              value={email || ""}
+              value={user.email || ""}
             />
           </div>
           <div>
@@ -73,12 +72,17 @@ const EditForm = () => {
               type="text"
               name="occupation"
               onChange={handleChange}
-              value={occupation || ""}
+              value={user.occupation || ""}
             />
           </div>
           <div>
             <CustomLabel>Bio</CustomLabel>
-            <CustomTextBox onChange={handleChange} value={bio || ""} rows={5} />
+            <CustomTextBox
+              onChange={handleChange}
+              value={user.bio || ""}
+              rows={5}
+              name="bio"
+            />
           </div>
           <ButtonWrap>
             <Button>Submit</Button>
