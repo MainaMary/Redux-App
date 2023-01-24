@@ -8,11 +8,15 @@ import CustomLoader from '../components/CustomLoader'
 import Modal from '../components/Modal'
 import { UserProps } from '../interfaces'
 import { deleteUser } from '../store/users/thunks'
+import FormModal from '../components/FormModal'
+import { useNavigate } from 'react-router-dom'
+
 
 const UsersList = () => {
   const [openModal, setOpenModal] = useState(false)
   const [userDetails, setUserDetails]= useState({})
   const dispatch = useDispatch<AppDispatch>()
+  const navigation= useNavigate()
   const users = useSelector((state:any) => {
     return state.users
 })
@@ -22,9 +26,14 @@ const UsersList = () => {
  
   const handleModal =() =>{
     setOpenModal((prev) => !prev)
+    console.log('open modal')
   }
+  console.log(openModal)
   const handleEdit = (details:UserProps) =>{
     console.log('Modal open')
+    console.log(details,'details');
+    
+   
   }
   const handleDelete = (userId:string) =>{
     console.log(userId,'userId');
@@ -55,7 +64,7 @@ const UsersList = () => {
                     <td>{user.occupation}</td>
                     <td>
                         <Flex>
-                            <Button onClick={() =>{handleEdit(user), setUserDetails(user)}}>Edit</Button>
+                            <Button onClick={() => navigation(`/edit/${user.id}`)}>Edit</Button>
                             <Button onClick={()=>handleDelete(user.id)}>Delete</Button>
                         </Flex>
                     </td>
@@ -64,7 +73,8 @@ const UsersList = () => {
             </table> 
             
             }
-            <>{openModal && <Modal openModal={openModal} handleModal={handleModal} userDetails={userDetails}/>}</>
+            {/* <>{openModal && <Modal openModal={openModal} handleModal={handleModal} userDetails={userDetails}/>}</> */}
+            <>{openModal && <FormModal/>}</>
         </Wrapper>
   )
 }
