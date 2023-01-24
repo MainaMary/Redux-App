@@ -1,10 +1,11 @@
 import React ,{useState, useEffect} from 'react'
 import { toast } from 'react-toastify';
-import styled from 'styled-components'
 import { Button } from '../styled'
 import { postSingleUser } from '../store/users/thunks';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../store';
+import { Link } from 'react-router-dom';
+import { FormWrapper, Form, CustomTextBox ,Title, CustomLabel, CustomInput} from '../styled';
 const AddUser = () => {
     const [formValues, setFormValues] = useState({
         name: '',
@@ -45,7 +46,7 @@ const AddUser = () => {
   console.log(error)
   return (
     <>
-       <Title>Add employee</Title>
+       <Title>Add employimport styled from 'styled-components'ee</Title>
       
     <FormWrapper>
     <Title>{error}</Title>
@@ -67,7 +68,13 @@ const AddUser = () => {
             <CustomLabel>Bio</CustomLabel>
             <CustomTextBox  onChange={handleTextBox} value={bio} rows={5}/>
             </div>
+            <div>
             <Button >Submit</Button>
+            <Button>
+              <Link to="/">Cancel</Link>
+            </Button>
+            </div>
+            
         </Form>
     </FormWrapper>
     </>
@@ -76,38 +83,4 @@ const AddUser = () => {
 }
 
 export default AddUser
-const Title = styled.h2`
-text-align: center;
-margin: 30px 0;
-`
-const FormWrapper = styled.div`
-display: flex;
-margin-top:64px;
-justify-content: center;
-width: 45%;
-margin:auto;
-border-radius: 10px;
-@media screen and (max-width: 768px) {
-    width: 70%;
-}
-`
-const Form = styled.form`
-box-shadow: 0 0 3px #777;
-width: 100%;
-padding: 24px 32px;
-@media screen and (max-width: 768px) {
-    padding: 24px 16px;
-}
-`
-const CustomLabel = styled.label`
-display: block;
-margin: 12px 0; 
-`
-const CustomInput = styled.input`
-width: 100%;
-padding: 10px 12px;
-border-radius: 5px;
-`
-const CustomTextBox = styled.textarea `
-width: 100%;
-`
+
