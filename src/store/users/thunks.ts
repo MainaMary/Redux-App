@@ -1,14 +1,14 @@
 import axios from "axios";
 import { fetchUsersSuccess, fetchUsersFailure, fetchUsersBegin, deleteSingleUser, postUser ,  editSingleuser} from "./actions";
 import {UserProps } from "../../interfaces/index"
-
+import { baseUrl } from "../../api";
 
 export const fetchUsers = () => {
     return async function (dispatch: any) {
        
         try {
             dispatch(fetchUsersBegin())
-            const response = await axios("https://us-central1-ti-reactjs-test.cloudfunctions.net/app/api/users")
+            const response = await axios(`/users`)
             const users = response.data
             console.log(response)
 
@@ -25,7 +25,7 @@ export const fetchUsers = () => {
 export const deleteUser = (id:string | undefined) =>{
     return async function (dispatch:any){
         try{
-            const response = await axios.delete(`https://us-central1-ti-reactjs-test.cloudfunctions.net/app/api/users/${id}`)
+            const response = await axios.delete(`/${id}`)
             dispatch(deleteSingleUser())
             dispatch(fetchUsersSuccess(response.data))
             return response.data
@@ -39,7 +39,7 @@ export const postSingleUser = (payload:UserProps)=>{
     return async function (dispatch:any){
         console.log(payload,'payload')
         try{
-            const res = await axios.post(`https://us-central1-ti-reactjs-test.cloudfunctions.net/app/api/user`,payload )
+            const res = await axios.post(`/user`,payload )
             dispatch(postUser())
             dispatch(fetchUsersSuccess(res.data))
             console.log(res.data)
@@ -54,7 +54,7 @@ export const postSingleUser = (payload:UserProps)=>{
 export const fetchSingleUser = (userId:string | undefined)=>{
     return async function(dispatch:any){
         try{
-            const response = await axios.get(`https://us-central1-ti-reactjs-test.cloudfunctions.net/app/api/user/${userId}`)
+            const response = await axios.get(`/user/${userId}`)
            
             dispatch(fetchUsersSuccess(response.data))
         }
@@ -68,7 +68,7 @@ export const fetchSingleUser = (userId:string | undefined)=>{
 export const editUser = (userId:string |undefined, payload:UserProps) =>{
     return async function(dispatch:any){
         try{
-            const response = await axios.patch(`https://us-central1-ti-reactjs-test.cloudfunctions.net/app/api/user/${userId}`,payload)
+            const response = await axios.patch(`/user/${userId}`,payload)
             console.log(response.data,'edit user details')
             dispatch(editSingleuser())
         }
