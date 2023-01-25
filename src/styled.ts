@@ -6,7 +6,7 @@ export const Button = styled.button.attrs(
   padding: ${(props) => (props.primary ? "12px 16px" : "10px 12px")};
   text-align: center;
   cursor: pointer;
-  color: #fff;
+  color: yellow;
   outline: none;
   font-size: 18px;
   border-radius: 5px;
@@ -50,13 +50,24 @@ export const CustomInput = styled.input`
 width: 100%;
 padding: 10px 12px;
 border-radius: 5px;
+border: 2px solid #ccc;
+outline:none;
+font-size:16px;
+
+
 `
 export const CustomTextBox = styled.textarea `
 width: 100%;
+padding: 10px 12px;
+border-radius: 5px;
+border: 2px solid #ccc;
+outline:none;
+font-size:16px;
 `
 export const ButtonWrap = styled.div`
 display:flex;
 justify-content:space-between;
+gap:8px;
 `
 export const Redirect = styled(Link)`
 color: #FFFF00;
