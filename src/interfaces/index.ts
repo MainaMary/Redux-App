@@ -8,7 +8,7 @@ export interface UserProps {
     email:string;
     occupation: string;
     bio: string
-    id?:string
+    id?:string | undefined
 
 
 }
@@ -17,4 +17,12 @@ export type InitialProps = {
     loading: boolean,
     error: string
 
+}
+interface Props {
+    users: UserProps[],
+    loading: boolean,
+    error: string
+}
+export type initialStateProps = {
+    users:Props
 }

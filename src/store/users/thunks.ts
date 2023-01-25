@@ -1,7 +1,7 @@
 import axios from "axios";
 import { fetchUsersSuccess, fetchUsersFailure, fetchUsersBegin, deleteSingleUser, postUser ,  editSingleuser} from "./actions";
 import {UserProps } from "../../interfaces/index"
-import { AnyAsyncThunk } from "@reduxjs/toolkit/dist/matchers";
+
 
 export const fetchUsers = () => {
     return async function (dispatch: any) {
@@ -22,7 +22,7 @@ export const fetchUsers = () => {
 
     }
 }
-export const deleteUser = (id:string) =>{
+export const deleteUser = (id:string | undefined) =>{
     return async function (dispatch:any){
         try{
             const response = await axios.delete(`https://us-central1-ti-reactjs-test.cloudfunctions.net/app/api/users/${id}`)

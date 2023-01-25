@@ -14,12 +14,12 @@ import {
   ButtonWrap,
   Title,
 } from "../styled";
-import { UserProps } from "../interfaces";
+import { UserProps , initialStateProps} from "../interfaces";
 import { editUser } from "../store/users/thunks";
 
 const EditForm = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const userDetails = useSelector((state: any) => state.users.users);
+  const userDetails = useSelector((state: initialStateProps) => state.users.users);
   const [user, setUser] = useState<UserProps>({
     name: "",
     email: "",

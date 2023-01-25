@@ -5,8 +5,7 @@ import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
 import { AppDispatch } from '../store'
 import CustomLoader from '../components/CustomLoader'
-import Modal from '../components/Modal'
-import { UserProps } from '../interfaces'
+import { UserProps,initialStateProps } from '../interfaces'
 import { deleteUser } from '../store/users/thunks'
 
 import { Redirect } from '../styled'
@@ -16,25 +15,15 @@ const UsersList = () => {
   const [openModal, setOpenModal] = useState(false)
   const dispatch = useDispatch<AppDispatch>()
   const navigation= useNavigate()
-  const users = useSelector((state:any) => {
+  const users = useSelector((state:initialStateProps) => {
+    console.log(state,'users users List')
     return state.users
 })
   useEffect(()=>{
    dispatch(fetchUsers())
   },[])
  
-  const handleModal =() =>{
-    setOpenModal((prev) => !prev)
-    console.log('open modal')
-  }
-  console.log(openModal)
-  const handleEdit = (details:UserProps) =>{
-    console.log('Modal open')
-    console.log(details,'details');
-    
-   
-  }
-  const handleDelete = (userId:string) =>{
+  const handleDelete = (userId:string | undefined) =>{
     console.log(userId,'userId');
     dispatch(deleteUser(userId))
   }
@@ -48,7 +37,7 @@ const UsersList = () => {
                     <Redirect to="/addUser">Add employee</Redirect>
                 </Button>
             </Flex>
-            {users.loading ? <Loader><CustomLoader/></Loader> : users.error ? <p>Error</p> :
+            {users.loading? <Loader><CustomLoader/></Loader> : users.error ? <p>Error</p> :
             
             <table className="table">
                 <tr>
