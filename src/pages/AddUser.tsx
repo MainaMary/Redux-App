@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { postSingleUser } from "../store/users/thunks";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, ButtonWrap, Redirect } from "../styled";
@@ -14,11 +14,13 @@ import {
   CustomInput,
 } from "../styled";
 const AddUser = () => {
+  const navigate = useNavigate()
   const [formValues, setFormValues] = useState({
     name: "",
     email: "",
     occupation: "",
   });
+  const [loading, setLoading]=useState(false)
   const dispatch = useDispatch<AppDispatch>();
   const [bio, setBio] = useState("");
   const [error, setError] = useState("");
@@ -28,12 +30,12 @@ const AddUser = () => {
     setFormValues({ ...formValues, [name]: value });
   };
   const state = useSelector((state:any)=> state)
-  console.log(state.users.loading,'post user')
+  console.log(state.users,'post user')
   //event: React.ChangeEvent<HTMLInputElement>
   const handleTextBox = (e: any) => {
     setBio(e.target.value);
   };
-  console.log(bio, "formValues");
+ 
   const handleSubmit = (e: any) => {
     e.preventDefault();
     console.log(bio, name, email, occupation);
@@ -44,14 +46,20 @@ const AddUser = () => {
       bio: bio,
     };
     dispatch(postSingleUser(payload));
-    toast.success("User created successfully")
-    
-  };
-  useEffect(() => {
+    toast.success('User registered successfully!')
+    setFormValues({name: "",
+    email: "",
+    occupation: "",})
+    setBio('')
+   };
+   
+   useEffect(() => {
     setTimeout(() => {
       setError("");
-    }, 2000);
+    
+    }, 1000);
   }, []);
+  
   console.log(error);
   return (
     <>
@@ -93,9 +101,9 @@ const AddUser = () => {
             <CustomTextBox onChange={handleTextBox} value={bio} rows={5} />
           </div>
           <ButtonWrap>
-            <Button>{state.users.loading ?'loading': 'Submit'}</Button>
+            <Button disabled={loading}>Submit</Button>
             <Button>
-              <Redirect to="/">Cancel</Redirect>
+              <Redirect to="/" >Cancel</Redirect>
             </Button>
           </ButtonWrap>
         </Form>

@@ -8,14 +8,12 @@ import CustomLoader from '../components/CustomLoader'
 import Modal from '../components/Modal'
 import { UserProps } from '../interfaces'
 import { deleteUser } from '../store/users/thunks'
-import FormModal from '../components/FormModal'
 
 import { Redirect } from '../styled'
 
 
 const UsersList = () => {
   const [openModal, setOpenModal] = useState(false)
-  const [userDetails, setUserDetails]= useState({})
   const dispatch = useDispatch<AppDispatch>()
   const navigation= useNavigate()
   const users = useSelector((state:any) => {
@@ -74,8 +72,7 @@ const UsersList = () => {
             </table> 
             
             }
-            {/* <>{openModal && <Modal openModal={openModal} handleModal={handleModal} userDetails={userDetails}/>}</> */}
-            <>{openModal && <FormModal/>}</>
+            
         </Wrapper>
   )
 }
@@ -99,6 +96,9 @@ margin: 20px 0;
 `
 const Loader = styled.div`
 text-align: center;
+margin:auto;
+display: flex;
+justify-content:center;
 `
 const Button = styled.div`
 text-transform: upper-case;

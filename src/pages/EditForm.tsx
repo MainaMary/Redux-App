@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -40,6 +41,7 @@ const EditForm = () => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     dispatch(editUser(id, user));
+    toast.success('User edited successfully!')
   };
   console.log(user, "user");
 
