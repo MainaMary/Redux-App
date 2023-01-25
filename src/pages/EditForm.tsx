@@ -40,7 +40,9 @@ const EditForm = () => {
   };
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    dispatch(editUser(id, user));
+    
+    const res = dispatch(editUser(id, user));
+    console.log(res,'res')
     toast.success('User edited successfully!')
   };
   console.log(user, "user");
@@ -89,7 +91,7 @@ const EditForm = () => {
           <ButtonWrap>
             <Button>Submit</Button>
             <Button>
-              <Redirect to="/">Cancel</Redirect>
+              <Redirect to="/">Go back</Redirect>
             </Button>
           </ButtonWrap>
         </Form>

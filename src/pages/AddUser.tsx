@@ -28,12 +28,15 @@ const AddUser = () => {
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
+    setError('')
+    
   };
   const state = useSelector((state:any)=> state)
   console.log(state.users,'post user')
   //event: React.ChangeEvent<HTMLInputElement>
   const handleTextBox = (e: any) => {
     setBio(e.target.value);
+    setError('')
   };
  
   const handleSubmit = (e: any) => {
@@ -45,19 +48,25 @@ const AddUser = () => {
       occupation: occupation,
       bio: bio,
     };
-    dispatch(postSingleUser(payload));
-    toast.success('User registered successfully!')
-    setFormValues({name: "",
-    email: "",
-    occupation: "",})
-    setBio('')
+    if(!name.trim() || !email || !bio ||!occupation){
+     setError('Please provide all the details')
+    }else{
+      dispatch(postSingleUser(payload));
+      toast.success('User registered successfully!')
+      setFormValues({name: "",
+      email: "",
+      occupation: "",})
+      setBio('')
+      setError('')
+    }
+   
    };
    
    useEffect(() => {
     setTimeout(() => {
       setError("");
     
-    }, 1000);
+    }, 500);
   }, []);
   
   console.log(error);
@@ -66,9 +75,10 @@ const AddUser = () => {
       <Title>Add user</Title>
 
       <FormWrapper>
-        <Title>{error}</Title>
+      
 
         <Form onSubmit={handleSubmit}>
+        <p style={{color:'red', textAlign:'center'}}>{error}</p>
           <div>
             <CustomLabel>Name</CustomLabel>
             <CustomInput
@@ -103,7 +113,7 @@ const AddUser = () => {
           <ButtonWrap>
             <Button disabled={loading}>Submit</Button>
             <Button>
-              <Redirect to="/" >Cancel</Redirect>
+              <Redirect to="/" >Go back</Redirect>
             </Button>
           </ButtonWrap>
         </Form>
